@@ -13,9 +13,9 @@
     </header>
 
     <nav class="navbar">
-        <a href="empleados.html">Empleados</a>
-        <a href="usuarios.html">Clientes</a>
-        <a href="reservas.html">Reservas</a>
+        <a href="empleados.php">Empleados</a>
+        <a href="usuarios.php">Clientes</a>
+        <a href="reservas.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
@@ -23,12 +23,28 @@
 
         <h2>Registrar Nuevo Cliente</h2>
 
-        <form class="formulario" action="procesar_cliente.php" method="POST" onsubmit="return confirmarRegistroCliente(event)">
-            <label>Nombres y Apellidos:</label>
-            <input type="text" name="nombre_completo" id="nombre_completo" required>
+        <form class="formulario" action="registrar_usuario.php" method="POST">
 
-            <button type="submit">Registrar Cliente</button>
+            <label>Usuario:</label>
+            <input type="text" name="usuario" required>
+
+            <label>Correo:</label>
+            <input type="email" name="correo" required>
+
+            <label>Contraseña:</label>
+            <input type="password" name="clave" required>
+
+            <label>Rol:</label>
+            <select name="rol">
+                <option value="empleado">Empleado</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button type="submit">Registrar Usuario</button>
+
         </form>
+
+
 
         <h2>Lista de Clientes</h2>
 

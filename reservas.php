@@ -13,8 +13,8 @@
     </header>
 
     <nav class="navbar">
-        <a href="usuarios.html">Usuarios</a>
-        <a href="reservas.html">Reservas</a>
+        <a href="usuarios.php">Usuarios</a>
+        <a href="reservas.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
@@ -22,36 +22,55 @@
 
         <h2>Registrar Nueva Reserva</h2>
 
-        <form class="formulario" action="procesar_reserva.php" method="POST" onsubmit="return confirmarRegistroReserva(event)">
-            <label>Usuario (cliente):</label>
-            <select name="usuario_id" id="usuario_id" required>
-                <option value="">Seleccione un usuario</option>
-                <!-- Opciones cargadas desde BD -->
-            </select>
+        <form class="formulario" action="registrar_reserva.php" method="POST">
+
+            <label>ID Cliente:</label>
+            <input type="number" name="cliente_id" required>
 
             <label>Número de Habitación:</label>
-            <input type="number" name="numero_habitacion" id="numero_habitacion" min="1" required>
+            <input type="number" name="numero_habitacion" required>
 
-            <label>Fecha de la reserva:</label>
-            <input type="date" name="fecha" id="fecha" required>
+            <label>Fecha:</label>
+            <input type="date" name="fecha" required>
 
             <button type="submit">Registrar Reserva</button>
+
         </form>
+
+
 
         <h2>Lista de Reservas</h2>
 
         <table class="tabla">
-            <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Número de Habitación</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Registros dinámicos desde BD -->
-            </tbody>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Número Habitación</th>
+                <th>Fecha</th>
+            </tr>
+
+            <?php
+            require "conexion.php";
+
+            $sql = "SELECT r.id, c.nombre_completo, r.numero_habitacion, r.fecha
+                    FROM reservas r
+                    INNER JOIN clientes c ON r.cliente_id = c.id";
+
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>".$row['id']."</td>
+                            <td>".$row['nombre_completo']."</td>
+                            <td>".$row['numero_habitacion']."</td>
+                            <td>".$row['fecha']."</td>
+                        </tr>";
+                }
+            }
+
+            $conn->close();
+            ?>
         </table>
 
     </section>

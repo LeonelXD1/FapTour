@@ -3,7 +3,7 @@ require_once "conexion.php";
 
 if (isset($_SESSION['usuario'])) {
     // Si ya está logueado NO debe ver el login
-    header("Location: usuarios.html"); // O usuarios.html si usas html
+    header("Location: usuarios.php"); // O usuarios.html si usas html
     exit;
 }
 
@@ -26,12 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Redirigir según rol
         if ($user["rol"] === "admin") {
-            header("Location: empleados.html");
+            header("Location: empleados.php");
         } else if ($user["rol"] === "empleado") {
-            header("Location: usuarios.html");
+            header("Location: usuarios.php");
         } else {
             // Rol desconocido → por si acaso
-            header("Location: usuarios.html");
+            header("Location: usuarios.php");
         }
         exit;
 

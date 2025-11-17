@@ -13,9 +13,9 @@
     </header>
 
     <nav class="navbar">
-        <a href="empleados.html">Empleados</a>
-        <a href="usuarios.html">Clientes</a>
-        <a href="reservas.html">Reservas</a>
+        <a href="clientes.php">Empleados</a>
+        <a href="usuarios.php">Clientes</a>
+        <a href="reservas.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
@@ -24,38 +24,42 @@
         <h2>Registrar Nuevo Empleado</h2>
 
 
-        <form class="formulario" action="procesar_empleado.php" method="POST" onsubmit="return confirmarRegistroEmpleado(event)">
-            <label>Nombres y Apellidos:</label>
-            <input type="text" name="nombre_completo" id="nombre_completo" required>
+        <form class="formulario" action="registrar_cliente.php" method="POST">
 
-            <label>Correo:</label>
-            <input type="text" name="correo" id="correo" required>
+            <label>Nombre Completo:</label>
+            <input type="text" name="nombre_completo" required>
 
-            <label>Rol:</label>
-            <select name="rol" id="rol" required>
-                <option value="">Seleccione un rol</option>
-                <option value="empleado">Empleado</option>
-            </select>
+            <button type="submit">Registrar Cliente</button>
 
-            <button type="submit">Registrar Empleado</button>
         </form>
+
 
         <h2>Administrador existente</h2>
         <p>El administrador principal ya está creado y no se puede registrar otro desde este formulario.</p>
 
         <table class="tabla">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Contraseña</th>
-                    <th>Rol</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Otros empleados se mostrarán aquí desde la BD -->
-            </tbody>
+            <tr>
+                <th>ID</th>
+                <th>Nombre Completo</th>
+            </tr>
+
+            <?php
+            require "conexion.php";
+
+            $sql = "SELECT id, nombre_completo FROM clientes";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>".$row['id']."</td>
+                            <td>".$row['nombre_completo']."</td>
+                        </tr>";
+                }
+            }
+
+            $conn->close();
+            ?>
         </table>
 
     </section>
