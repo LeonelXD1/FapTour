@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FapTour - Registro de Usuarios</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>FapTour - Registro de Usuarios</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="usuarios.html">Usuarios</a>
+        <a href="reservas.html">Reservas</a>
+        <a href="logout.php">Cerrar sesión</a>
+    </nav>
+
+    <section class="contenedor">
+
+        <h2>Registrar Nuevo Usuario</h2>
+
+        <form class="formulario" action="procesar_usuario.php" method="POST" onsubmit="return confirmarRegistroUsuario(event)">
+            <label>Nombres y Apellidos:</label>
+            <input type="text" name="nombre_completo" required>
+
+            <label>Rol:</label>
+            <select name="rol" required>
+                <option value="">Seleccione un rol</option>
+                <option value="admin">Administrador</option>
+                <option value="cliente">Cliente</option>
+            </select>
+
+            <button type="submit">Registrar Usuario</button>
+        </form>
+
+        <h2>Lista de Usuarios</h2>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Completo</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Registros dinámicos desde BD -->
+            </tbody>
+        </table>
+
+    </section>
+
+    <script>
+        function confirmarRegistroUsuario(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const nombreCompleto = form.nombre_completo.value.trim();
+            const rol = form.rol.value;
+            
+            if (!nombreCompleto || !rol) {
+                alert('Por favor, completa todos los campos');
+                return false;
+            }
+            
+            const mensaje = `¿Confirmar registro del usuario?\n\nNombre: ${nombreCompleto}\nRol: ${rol}`;
+            
+            if (confirm(mensaje)) {
+                form.submit();
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FapTour - Registro de Reservas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>FapTour - Registro de Reservas</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="usuarios.html">Usuarios</a>
+        <a href="reservas.html">Reservas</a>
+        <a href="logout.php">Cerrar sesión</a>
+    </nav>
+
+    <section class="contenedor">
+
+        <h2>Registrar Nueva Reserva</h2>
+
+        <form class="formulario" action="procesar_reserva.php" method="POST" onsubmit="return confirmarRegistroReserva(event)">
+            <label>Usuario (cliente):</label>
+            <select name="usuario_id" id="usuario_id" required>
+                <option value="">Seleccione un usuario</option>
+                <!-- Opciones cargadas desde BD -->
+            </select>
+
+            <label>Número de Habitación:</label>
+            <input type="number" name="numero_habitacion" id="numero_habitacion" min="1" required>
+
+            <label>Fecha de la reserva:</label>
+            <input type="date" name="fecha" id="fecha" required>
+
+            <button type="submit">Registrar Reserva</button>
+        </form>
+
+        <h2>Lista de Reservas</h2>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Número de Habitación</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Registros dinámicos desde BD -->
+            </tbody>
+        </table>
+
+    </section>
+
+    <script>
+        function confirmarRegistroReserva(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const usuarioSelect = form.usuario_id;
+            const numeroHabitacion = form.numero_habitacion.value.trim();
+            const fecha = form.fecha.value;
+            
+            if (!usuarioSelect.value || !numeroHabitacion || !fecha) {
+                alert('Por favor, completa todos los campos');
+                return false;
+            }
+            
+            const usuarioTexto = usuarioSelect.options[usuarioSelect.selectedIndex].text;
+            const mensaje = `¿Confirmar registro de la reserva?\n\nCliente: ${usuarioTexto}\nNúmero de Habitación: ${numeroHabitacion}\nFecha: ${fecha}`;
+            
+            if (confirm(mensaje)) {
+                form.submit();
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

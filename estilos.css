@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Header */
+header {
+    background: #1a73e8;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    background: #0b57d0;
+    padding: 12px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.navbar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor */
+.contenedor {
+    width: 85%;
+    background: #fff;
+    margin: 25px auto;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+/* Formularios */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.formulario input,
+.formulario select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formulario button {
+    background: #1a73e8;
+    border: none;
+    padding: 12px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.formulario button:hover {
+    background: #0b57d0;
+}
+
+/* Tablas */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tabla th {
+    background: #e8e8e8;
+    font-weight: bold;
+}
+
+.tabla tr:hover {
+    background: #f7f7f7;
+}
