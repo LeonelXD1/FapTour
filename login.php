@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Redirigir según rol
         if ($user["rol"] === "admin") {
-            header("Location: empleados.php");
-        } else if ($user["rol"] === "empleado") {
             header("Location: usuarios.php");
+        } else if ($user["rol"] === "empleado") {
+            header("Location: clientes.php");
         } else {
             // Rol desconocido → por si acaso
             header("Location: usuarios.php");

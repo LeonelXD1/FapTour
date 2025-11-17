@@ -1,3 +1,11 @@
+<?php
+require "conexion.php"; // define $pdo
+if ($_SESSION["rol"] !== "empleado") {
+    echo "<h2>Acceso denegado. Solo empleados.</h2>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,20 +17,18 @@
 <body>
 
     <header>
-        <h1>FapTour - Registro de Empleados</h1>
+        <h1>FapTour - Registro de Clientes</h1>
     </header>
 
     <nav class="navbar">
-        <a href="clientes.php">Empleados</a>
-        <a href="usuarios.php">Clientes</a>
+        <a href="clientes.php">Clientes</a>
         <a href="reservas.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
     <section class="contenedor">
 
-        <h2>Registrar Nuevo Empleado</h2>
-
+        <h2>Registrar Nuevo Cliente</h2>
 
         <form class="formulario" action="registrar_cliente.php" method="POST">
 
@@ -33,10 +39,6 @@
 
         </form>
 
-
-        <h2>Administrador existente</h2>
-        <p>El administrador principal ya está creado y no se puede registrar otro desde este formulario.</p>
-
         <table class="tabla">
             <tr>
                 <th>ID</th>
@@ -44,48 +46,24 @@
             </tr>
 
             <?php
-            require "conexion.php";
+            try {
+                $sql = "SELECT id, nombre_completo FROM clientes";
+                $stmt = $pdo->query($sql);
+                $clientes = $stmt->fetchAll();
 
-            $sql = "SELECT id, nombre_completo FROM clientes";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
+                foreach ($clientes as $row) {
                     echo "<tr>
-                            <td>".$row['id']."</td>
-                            <td>".$row['nombre_completo']."</td>
+                            <td>{$row['id']}</td>
+                            <td>{$row['nombre_completo']}</td>
                         </tr>";
                 }
+            } catch (PDOException $e) {
+                echo "<tr><td colspan='2'>Error: " . $e->getMessage() . "</td></tr>";
             }
-
-            $conn->close();
             ?>
         </table>
 
     </section>
-
-    <script>
-        function confirmarRegistroEmpleado(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const nombreCompleto = form.nombre_completo.value.trim();
-            const rol = form.rol.value;
-
-            if (!nombreCompleto || !rol) {
-                alert('Por favor, completa todos los campos');
-                return false;
-            }
-
-            const mensaje = `¿Confirmar registro del empleado?\n\nNombre: ${nombreCompleto}\nRol: ${rol}`;
-
-            if (confirm(mensaje)) {
-                form.submit();
-            }
-
-            return false;
-        }
-    </script>
 
 </body>
 </html>

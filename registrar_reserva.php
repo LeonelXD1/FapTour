@@ -1,18 +1,26 @@
 <?php
-require "conexion.php";
+require "conexion.php"; // define $pdo
 
+// Recibir datos del formulario
 $cliente_id = $_POST['cliente_id'];
 $numero = $_POST['numero_habitacion'];
 $fecha = $_POST['fecha'];
 
-$sql = "INSERT INTO reservas (cliente_id, numero_habitacion, fecha)
-        VALUES ('$cliente_id', '$numero', '$fecha')";
+try {
+    // Preparar la consulta con placeholders (previene inyección SQL)
+    $stmt = $pdo->prepare("INSERT INTO reservas (cliente_id, numero_habitacion, fecha)
+                           VALUES (:cliente_id, :numero_habitacion, :fecha)");
 
-if ($conn->query($sql)) {
-    echo "<script>alert('Reserva registrada'); window.location='reservas.html';</script>";
-} else {
-    echo "Error: " . $conn->error;
+    // Ejecutar con los valores
+    $stmt->execute([
+        ':cliente_id' => $cliente_id,
+        ':numero_habitacion' => $numero,
+        ':fecha' => $fecha
+    ]);
+
+    echo "<script>alert('Reserva registrada correctamente'); window.location='reservas.php';</script>";
+
+} catch (PDOException $e) {
+    echo "Error al registrar reserva: " . $e->getMessage();
 }
-
-$conn->close();
 ?>

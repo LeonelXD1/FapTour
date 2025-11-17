@@ -1,3 +1,11 @@
+<?php
+require "conexion.php"; // aquí se define $pdo
+if ($_SESSION["rol"] !== "empleado") {
+    echo "<h2>Acceso denegado. Solo empleados.</h2>";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,11 +46,10 @@
         </form>
 
 
-
         <h2>Lista de Reservas</h2>
 
         <table class="tabla">
-                <tr>
+            <tr>
                 <th>ID</th>
                 <th>Cliente</th>
                 <th>Número Habitación</th>
@@ -50,54 +57,29 @@
             </tr>
 
             <?php
-            require "conexion.php";
+            try {
+                $sql = "SELECT r.id, c.nombre_completo, r.numero_habitacion, r.fecha
+                        FROM reservas r
+                        INNER JOIN clientes c ON r.cliente_id = c.id";
 
-            $sql = "SELECT r.id, c.nombre_completo, r.numero_habitacion, r.fecha
-                    FROM reservas r
-                    INNER JOIN clientes c ON r.cliente_id = c.id";
+                $stmt = $pdo->query($sql);
+                $reservas = $stmt->fetchAll();
 
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
+                foreach ($reservas as $row) {
                     echo "<tr>
-                            <td>".$row['id']."</td>
-                            <td>".$row['nombre_completo']."</td>
-                            <td>".$row['numero_habitacion']."</td>
-                            <td>".$row['fecha']."</td>
+                            <td>{$row['id']}</td>
+                            <td>{$row['nombre_completo']}</td>
+                            <td>{$row['numero_habitacion']}</td>
+                            <td>{$row['fecha']}</td>
                         </tr>";
                 }
+            } catch (PDOException $e) {
+                echo "<tr><td colspan='4'>Error: " . $e->getMessage() . "</td></tr>";
             }
-
-            $conn->close();
             ?>
         </table>
 
     </section>
 
-    <script>
-        function confirmarRegistroReserva(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const usuarioSelect = form.usuario_id;
-            const numeroHabitacion = form.numero_habitacion.value.trim();
-            const fecha = form.fecha.value;
-            
-            if (!usuarioSelect.value || !numeroHabitacion || !fecha) {
-                alert('Por favor, completa todos los campos');
-                return false;
-            }
-            
-            const usuarioTexto = usuarioSelect.options[usuarioSelect.selectedIndex].text;
-            const mensaje = `¿Confirmar registro de la reserva?\n\nCliente: ${usuarioTexto}\nNúmero de Habitación: ${numeroHabitacion}\nFecha: ${fecha}`;
-            
-            if (confirm(mensaje)) {
-                form.submit();
-            }
-            
-            return false;
-        }
-    </script>
 </body>
 </html>
