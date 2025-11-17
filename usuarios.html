@@ -3,47 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FapTour - Registro de Usuarios</title>
+    <title>FapTour - Registro de Clientes</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
     <header>
-        <h1>FapTour - Registro de Usuarios</h1>
+        <h1>FapTour - Registro de Clientes</h1>
     </header>
 
     <nav class="navbar">
-        <a href="usuarios.html">Usuarios</a>
+        <a href="empleados.html">Empleados</a>
+        <a href="usuarios.html">Clientes</a>
         <a href="reservas.html">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
     <section class="contenedor">
 
-        <h2>Registrar Nuevo Usuario</h2>
+        <h2>Registrar Nuevo Cliente</h2>
 
-        <form class="formulario" action="procesar_usuario.php" method="POST" onsubmit="return confirmarRegistroUsuario(event)">
+        <form class="formulario" action="procesar_cliente.php" method="POST" onsubmit="return confirmarRegistroCliente(event)">
             <label>Nombres y Apellidos:</label>
-            <input type="text" name="nombre_completo" required>
+            <input type="text" name="nombre_completo" id="nombre_completo" required>
 
-            <label>Rol:</label>
-            <select name="rol" required>
-                <option value="">Seleccione un rol</option>
-                <option value="admin">Administrador</option>
-                <option value="cliente">Cliente</option>
-            </select>
-
-            <button type="submit">Registrar Usuario</button>
+            <button type="submit">Registrar Cliente</button>
         </form>
 
-        <h2>Lista de Usuarios</h2>
+        <h2>Lista de Clientes</h2>
 
         <table class="tabla">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre Completo</th>
-                    <th>Rol</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,19 +47,18 @@
     </section>
 
     <script>
-        function confirmarRegistroUsuario(event) {
+        function confirmarRegistroCliente(event) {
             event.preventDefault();
             
             const form = event.target;
-            const nombreCompleto = form.nombre_completo.value.trim();
-            const rol = form.rol.value;
+                const nombreCompleto = form.nombre_completo.value.trim();
             
-            if (!nombreCompleto || !rol) {
-                alert('Por favor, completa todos los campos');
-                return false;
-            }
-            
-            const mensaje = `¿Confirmar registro del usuario?\n\nNombre: ${nombreCompleto}\nRol: ${rol}`;
+                if (!nombreCompleto) {
+                    alert('Por favor, completa el nombre');
+                    return false;
+                }
+
+                const mensaje = `¿Confirmar registro del cliente?\n\nNombre: ${nombreCompleto}`;
             
             if (confirm(mensaje)) {
                 form.submit();

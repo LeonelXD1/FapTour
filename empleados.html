@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FapTour - Registro de Empleados</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>FapTour - Registro de Empleados</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="empleados.html">Empleados</a>
+        <a href="usuarios.html">Clientes</a>
+        <a href="reservas.html">Reservas</a>
+        <a href="logout.php">Cerrar sesión</a>
+    </nav>
+
+    <section class="contenedor">
+
+        <h2>Registrar Nuevo Empleado</h2>
+
+
+        <form class="formulario" action="procesar_empleado.php" method="POST" onsubmit="return confirmarRegistroEmpleado(event)">
+            <label>Nombres y Apellidos:</label>
+            <input type="text" name="nombre_completo" id="nombre_completo" required>
+
+            <label>Rol:</label>
+            <select name="rol" id="rol" required>
+                <option value="">Seleccione un rol</option>
+                <option value="administrador" disabled>Administrador (no disponible)</option>
+                <option value="recepcionista">Recepcionista</option>
+                <option value="empleado">Empleado</option>
+            </select>
+
+            <button type="submit">Registrar Empleado</button>
+        </form>
+
+        <h2>Administrador existente</h2>
+        <p>El administrador principal ya está creado y no se puede registrar otro desde este formulario.</p>
+
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Contraseña</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Administrador pre-creado -->
+                <tr>
+                    <td>1</td>
+                    <td>Admin FapTour</td>
+                    <td>admin@faptour.local</td>
+                    <td>admin123</td>
+                    <td>Administrador</td>
+                </tr>
+                <!-- Otros empleados se mostrarán aquí desde la BD -->
+            </tbody>
+        </table>
+
+    </section>
+
+    <script>
+        function confirmarRegistroEmpleado(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const nombreCompleto = form.nombre_completo.value.trim();
+            const rol = form.rol.value;
+
+            if (!nombreCompleto || !rol) {
+                alert('Por favor, completa todos los campos');
+                return false;
+            }
+
+            const mensaje = `¿Confirmar registro del empleado?\n\nNombre: ${nombreCompleto}\nRol: ${rol}`;
+
+            if (confirm(mensaje)) {
+                form.submit();
+            }
+
+            return false;
+        }
+    </script>
+
+</body>
+</html>
