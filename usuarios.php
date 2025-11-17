@@ -22,7 +22,6 @@ if ($_SESSION["rol"] !== "admin") {
     </header>
 
     <nav class="navbar">
-        <a href="usuarios.php">Empleados</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 

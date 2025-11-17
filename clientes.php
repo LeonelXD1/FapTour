@@ -21,7 +21,6 @@ if ($_SESSION["rol"] !== "empleado") {
     </header>
 
     <nav class="navbar">
-        <a href="clientes.php">Clientes</a>
         <a href="reservas.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
