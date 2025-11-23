@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2025 a las 13:25:37
+-- Tiempo de generación: 23-11-2025 a las 23:31:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,14 @@ CREATE TABLE `clientes` (
   `nombre_completo` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `nombre_completo`) VALUES
+(1, 'Leo'),
+(2, 'Kevin');
+
 -- --------------------------------------------------------
 
 --
@@ -42,8 +50,18 @@ CREATE TABLE `reservas` (
   `id` int(11) NOT NULL,
   `cliente_id` int(11) NOT NULL,
   `numero_habitacion` int(11) NOT NULL,
-  `fecha` date NOT NULL
+  `fecha` date NOT NULL,
+  `estado` enum('activa','cancelada') DEFAULT 'activa',
+  `fecha_cancelacion` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reservas`
+--
+
+INSERT INTO `reservas` (`id`, `cliente_id`, `numero_habitacion`, `fecha`, `estado`, `fecha_cancelacion`) VALUES
+(2, 1, 3, '2025-11-25', 'cancelada', '2025-11-23 17:27:23'),
+(3, 2, 2, '2025-11-20', 'activa', NULL);
 
 -- --------------------------------------------------------
 
@@ -65,7 +83,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `usuario`, `clave`, `rol`, `correo`) VALUES
 (1, 'admin', '$2y$10$eFRLL6t8PD9ZmBriHeAdVOcu15mKLUwf76z7wAQHKG75PVCcD3DOu', 'admin', 'usuario1@example.com'),
-(2, 'admin1', '$2y$10$zZEd6eFDFcE8jlK0VRKxa.B6l6Egn9FAPEL.Kni.LxE9zllj34SIO', 'empleado', 'usuario2@example.com');
+(2, 'admin1', '$2y$10$zZEd6eFDFcE8jlK0VRKxa.B6l6Egn9FAPEL.Kni.LxE9zllj34SIO', 'empleado', 'usuario2@example.com'),
+(3, 'admin2', '$2y$10$eoC3CWJbkkl11U/Grk145eNFsQJqoJoBjWZjXVe9x8VB8Yqjr6fOq', 'empleado', 'admin2@epn.edu.ec'),
+(4, 'empleado3', '$2y$10$PmQVfGNOS2iWbR9y/u2FD.dDy6PN7VIQbnerqlYMz4nVgPZxVmmJC', 'empleado', 'empleado3@epn.edu.ec');
 
 --
 -- Índices para tablas volcadas
@@ -100,19 +120,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
