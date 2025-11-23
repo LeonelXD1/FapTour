@@ -53,11 +53,13 @@ if ($_SESSION["rol"] !== "empleado") {
                 <th>Cliente</th>
                 <th>Número Habitación</th>
                 <th>Fecha</th>
+                <th>Estado</th>
+                <th>Fecha cancelación</th>
             </tr>
 
             <?php
             try {
-                $sql = "SELECT r.id, c.nombre_completo, r.numero_habitacion, r.fecha
+                $sql = "SELECT r.id, c.nombre_completo, r.numero_habitacion, r.fecha, r.estado, r.fecha_cancelacion
                         FROM reservas r
                         INNER JOIN clientes c ON r.cliente_id = c.id";
 
@@ -66,11 +68,20 @@ if ($_SESSION["rol"] !== "empleado") {
 
                 foreach ($reservas as $row) {
                     echo "<tr>
-                            <td>{$row['id']}</td>
-                            <td>{$row['nombre_completo']}</td>
-                            <td>{$row['numero_habitacion']}</td>
-                            <td>{$row['fecha']}</td>
-                        </tr>";
+                          <td>{$row['id']}</td>
+                          <td>{$row['nombre_completo']}</td>
+                          <td>{$row['numero_habitacion']}</td>
+                          <td>{$row['fecha']}</td>
+                          <td>{$row['estado']}</td>
+                          <td>{$row['fecha_cancelacion']}</td>
+                          <td>
+                            <a href='modificar_reserva.php?id={$row['id']}'>Modificar</a> |
+                            <a href='cancelar_reserva.php?id={$row['id']}'
+                            onclick=\"return confirm('¿Seguro deseas cancelar esta reserva?');\">
+                            Cancelar
+                            </a>
+                        </td>
+                    </tr>";
                 }
             } catch (PDOException $e) {
                 echo "<tr><td colspan='4'>Error: " . $e->getMessage() . "</td></tr>";
