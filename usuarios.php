@@ -22,6 +22,7 @@ if ($_SESSION["rol"] !== "admin") {
     </header>
 
     <nav class="navbar">
+        <a href="reservas_admin.php">Reservas</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
