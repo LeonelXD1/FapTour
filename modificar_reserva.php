@@ -39,7 +39,7 @@ if (!$reserva) {
 
     <?php if ($reserva['estado'] === 'cancelada'): ?>
 
-        <h3 style="color: red;">❌ Esta reserva está cancelada y no puede modificarse.</h3>
+        <h3 style="color: red;">Esta reserva está cancelada y no puede modificarse.</h3>
         <a href="reservas.php">Volver</a>
 
     <?php else: ?>

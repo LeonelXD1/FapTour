@@ -1,7 +1,8 @@
 <?php
-require "conexion.php"; // define $pdo
-// Control de acceso por rol
-if ($_SESSION["rol"] !== "admin") {
+session_start();
+require "conexion.php"; 
+
+if (!isset($_SESSION["rol"]) || $_SESSION["rol"] !== "admin") {
     echo "<h2>Acceso denegado. Solo administradores.</h2>";
     exit;
 }
@@ -18,14 +19,29 @@ if ($_SESSION["rol"] !== "admin") {
 <body>
 
     <header>
-        <h1>FapTour - Registro de Empleados</h1>
+        <h1>Registro de Empleados</h1>
     </header>
 
     <nav class="navbar">
+        <a href="usuarios.php">Usuarios</a>
+        <a href="reportes.php">Reportes</a>
+        <a href="admin_tipos.php">Tipos de Habitaciones</a>
+        <a href="admin_habitaciones.php">Habitaciones</a>
         <a href="logout.php">Cerrar sesión</a>
     </nav>
 
     <section class="contenedor">
+
+        <?php if (isset($_SESSION['mensaje'])): ?>
+            <div class="msg-alerta msg-<?php echo $_SESSION['tipo_mensaje']; ?>">
+                <?php 
+                    echo $_SESSION['mensaje']; 
+                    // Borramos el mensaje para que no salga al recargar
+                    unset($_SESSION['mensaje']);
+                    unset($_SESSION['tipo_mensaje']);
+                ?>
+            </div>
+        <?php endif; ?>
 
         <h2>Registrar Nuevo Empleado</h2>
 
@@ -81,31 +97,5 @@ if ($_SESSION["rol"] !== "admin") {
         </table>
 
     </section>
-
-    <script>
-        function confirmarRegistroUsuario(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const usuario = form.usuario.value.trim();
-            const correo = form.correo.value.trim();
-            const clave = form.clave.value.trim();
-            const rol = form.rol.value;
-
-            if (!usuario || !correo || !clave || !rol) {
-                alert('Por favor, completa todos los campos');
-                return false;
-            }
-
-            const mensaje = `¿Confirmar registro del usuario?\n\nUsuario: ${usuario}\nCorreo: ${correo}\nRol: ${rol}`;
-
-            if (confirm(mensaje)) {
-                form.submit();
-            }
-
-            return false;
-        }
-    </script>
-
 </body>
 </html>

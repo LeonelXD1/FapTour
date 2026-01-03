@@ -1,16 +1,21 @@
 <?php
-require "conexion.php"; // define $pdo
+require "conexion.php";
 
-$nombre = $_POST['nombre_completo'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $documento = $_POST['documento'];
+    $nombre = $_POST['nombre_completo'];
+    $telefono = $_POST['telefono'];
+    $correo = $_POST['correo'];
 
-try {
-    // Preparar consulta segura con placeholders
-    $stmt = $pdo->prepare("INSERT INTO clientes (nombre_completo) VALUES (:nombre)");
-    $stmt->execute([':nombre' => $nombre]);
-
-    echo "<script>alert('Cliente registrado correctamente'); window.location='clientes.php';</script>";
-
-} catch (PDOException $e) {
-    echo "Error al registrar cliente: " . $e->getMessage();
+    try {
+        $sql = "INSERT INTO clientes (documento, nombre_completo, telefono, correo) VALUES (?, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$documento, $nombre, $telefono, $correo]);
+        
+        header("Location: clientes.php");
+        exit;
+    } catch (PDOException $e) {
+        echo "Error al registrar: " . $e->getMessage();
+    }
 }
 ?>

@@ -1,92 +1,358 @@
-/* Estilos generales */
+/* =========================================
+   0. VARIABLES GLOBALES (Paleta Casal & Gallery)
+   ========================================= */
+:root {
+/* --- Colores de Marca (Azules Principales) --- */
+    --color-primary: #1a73e8;       /* Azul estándar (Google blue) */
+    --color-primary-dark: #0d47a1;  /* Azul oscuro para degradados */
+    --color-primary-hover: #1557b0; /* Azul al pasar el mouse */
+    --color-secondary: #5f6368;     /* Gris para textos secundarios */
+    
+    /* --- Fondos (Gallery White) --- */
+    --bg-body: #EFEFEF;             /* Gallery: Fondo general de la página */
+    --bg-card: #ffffff;             /* Blanco puro en tarjetas para que resalten sobre el Gallery */
+    --bg-form: #f8f9fa;             /* Formularios */
+    --bg-hover: #dfe6e9;            /* Hovers sutiles */
+
+    /* --- Textos --- */
+    --text-main: #2d3436;           /* Texto principal (casi negro, mejor contraste con Gallery) */
+    --text-heading: #1e272e;        /* Títulos */
+    --text-label: #444444;          
+    --text-white: #ffffff;          /* Texto sobre el azul (header) */
+
+    /* --- Tablas --- */
+    --table-header-bg: #1a73e8;     /* Ahora la cabecera de la tabla combina con el azul principal */
+    --table-border: #dcdcdc;
+    --table-row-hover: #e2e6ea;
+
+    /* --- Estados --- */
+    --state-success: #28a745;       
+    --state-success-bg: #d1e7dd;    
+    --state-danger: #dc3545;        
+    --state-danger-text: #842029;   
+    --state-danger-bg: #f8d7da;     
+    --state-gray: #6c757d;          
+    --state-action-red: #e3342f;    
+
+    /* --- Inputs --- */
+    --input-border: #bdc3c7;
+    --input-focus-border: #315762;  /* El borde al escribir ahora es color Casal */
+    
+    /* --- Tipografía --- */
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================================
+   1. ESTILOS GENERALES Y FUENTES
+   ========================================= */
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f4f4;
+    font-family: var(--font-stack);
+    background-color: var(--bg-body);
+    color: var(--text-main);
 }
 
-/* Header */
+/* =========================================
+   2. HEADER Y NAVEGACIÓN
+   ========================================= */
 header {
-    background: #1a73e8;
-    color: #fff;
+    /* Degradado usando las variables */
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--text-white);
     text-align: center;
-    padding: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Navbar */
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
 .navbar {
-    background: #0b57d0;
-    padding: 12px;
+    background-color: var(--bg-card);
+    padding: 0;
     display: flex;
-    gap: 20px;
     justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .navbar a {
-    color: white;
-    font-weight: bold;
+    color: var(--color-secondary);
+    padding: 15px 25px;
     text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
 }
 
 .navbar a:hover {
-    text-decoration: underline;
+    color: var(--color-primary);
+    background-color: var(--bg-hover);
+    border-bottom: 3px solid var(--color-primary);
 }
 
-/* Contenedor */
+/* =========================================
+   3. CONTENEDOR PRINCIPAL (Efecto Tarjeta)
+   ========================================= */
 .contenedor {
     width: 85%;
-    background: #fff;
-    margin: 25px auto;
-    padding: 25px;
-    border-radius: 8px;
+    max-width: 1100px;
+    background: var(--bg-card);
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
-/* Formularios */
+h2, h3 {
+    color: var(--text-heading);
+    border-bottom: 2px solid #f1f3f4;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* =========================================
+   4. FORMULARIOS
+   ========================================= */
 .formulario {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 30px;
+    background-color: var(--bg-form);
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+}
+
+.formulario label {
+    font-weight: bold;
+    color: var(--text-label);
+    margin-bottom: 5px;
+    display: block;
 }
 
 .formulario input,
 .formulario select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    transition: border 0.3s;
 }
 
-.formulario button {
-    background: #1a73e8;
+.formulario input:focus,
+.formulario select:focus {
+    border-color: var(--input-focus-border);
+    outline: none;
+    /* Usamos el color primario con transparencia para el brillo */
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2); 
+}
+
+.formulario button, button {
+    background-color: var(--color-primary);
     border: none;
-    padding: 12px;
-    color: #fff;
-    border-radius: 5px;
+    padding: 12px 24px;
+    color: var(--text-white);
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.formulario button:hover {
-    background: #0b57d0;
+.formulario button:hover, button:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-2px);
 }
 
-/* Tablas */
+/* =========================================
+   5. TABLAS (Estilo Moderno)
+   ========================================= */
 .tabla {
     width: 100%;
-    border-collapse: collapse;
-}
-
-.tabla th,
-.tabla td {
-    padding: 12px;
-    border-bottom: 1px solid #ccc;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 .tabla th {
-    background: #e8e8e8;
-    font-weight: bold;
+    background-color: var(--table-header-bg); /* Ojo: Aquí está tu morado */
+    color: var(--text-white);
+    padding: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.tabla td {
+    padding: 15px;
+    border-bottom: 1px solid var(--table-border);
+    color: var(--text-label);
+}
+
+.tabla tr:last-child td {
+    border-bottom: none;
 }
 
 .tabla tr:hover {
-    background: #f7f7f7;
+    background-color: var(--table-row-hover);
+}
+
+/* =========================================
+   6. REPORTES Y BADGES
+   ========================================= */
+
+/* Panel de Filtros */
+.panel-control {
+    background: var(--bg-card);
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.panel-control label {
+    margin-right: 10px;
+    color: #555;
+}
+
+/* Etiquetas de Estado */
+.badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    color: var(--text-white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: inline-block;
+    min-width: 85px;
+    text-align: center;
+}
+
+/* Nota: Mantuve los gradientes "hardcoded" aquí porque usar variables
+   en gradientes requiere una sintaxis más compleja, pero usan los colores base */
+.bg-activa { 
+    background: linear-gradient(45deg, var(--state-success), #20c997); 
+}
+.bg-cancelada { 
+    background: linear-gradient(45deg, var(--state-danger), #ff6b6b); 
+}
+.bg-completada { 
+    background: linear-gradient(45deg, var(--state-gray), #adb5bd); 
+}
+
+/* Botón especial para imprimir */
+.btn-print {
+    background-color: #1a73e8; 
+}
+.btn-print:hover {
+    background-color: #1a73e8;
+}
+
+/* Enlaces de acciones */
+.accion-roja {
+    color: var(--state-action-red);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--state-action-red);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.accion-roja:hover {
+    background-color: var(--state-action-red);
+    color: var(--text-white);
+    text-decoration: none;
+}
+
+/* =========================================
+   7. ALERTAS
+   ========================================= */
+.msg-alerta {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.msg-success { 
+    background-color: var(--state-success-bg); 
+    color: #0f5132; 
+    border-left: 5px solid #0f5132; 
+}
+
+.msg-danger { 
+    background-color: var(--state-danger-bg); 
+    color: var(--state-danger-text); 
+    border-left: 5px solid var(--state-danger-text); 
+}
+
+/* Botones de Acción en la tabla */
+.btn-accion {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 5px;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.bg-activa { background-color: var(--estado-activa); }
+.bg-cancelada { background-color: var(--estado-cancelada); }
+.bg-finalizada { background-color: var(--estado-finalizada); }
+
+/* Botones de Acción en la tabla */
+.btn-accion {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-right: 5px;
+    transition: background 0.2s;
+    font-weight: 500;
+}
+
+.btn-editar { color: #1a73e8; background: #e8f0fe; }
+.btn-editar:hover { background: #d2e3fc; }
+
+.btn-cancelar { color: #d93025; background: #fce8e6; }
+.btn-cancelar:hover { background: #fad2cf; }
+
+.btn-completar { color: #137333; background: #e6f4ea; }
+.btn-completar:hover { background: #ceead6; }
+
+/* GRIS - Para Finalizada (Elegante y cerrado) */
+.bg-finalizada { 
+    background: linear-gradient(135deg, #606c88, #3f4c6b); 
+}
+
+/* Tabla ajustes */
+.tabla th { background-color: var(--color-primary); color: white; }
+
+/* =========================================
+   IMPRESIÓN
+   ========================================= */
+@media print {
+    .navbar, .panel-control, .formulario, button, .accion-roja { display: none !important; }
+    .contenedor { box-shadow: none; border: none; width: 100%; margin: 0; }
+    .tabla th { background-color: #ddd !important; color: black; }
+    .badge { border: 1px solid #000; color: black; background: none !important; box-shadow: none; }
 }

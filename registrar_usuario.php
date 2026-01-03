@@ -1,5 +1,6 @@
 <?php
-require "conexion.php"; // define $pdo
+session_start(); // 1. IMPORTANTE: Iniciar sesión siempre al principio
+require "conexion.php"; 
 
 $usuario = $_POST['usuario'];
 $correo  = $_POST['correo'];
@@ -7,7 +8,6 @@ $clave   = password_hash($_POST['clave'], PASSWORD_BCRYPT);
 $rol     = $_POST['rol'];
 
 try {
-    // Preparar consulta segura con placeholders
     $stmt = $pdo->prepare("INSERT INTO usuarios (usuario, clave, rol, correo)
                            VALUES (:usuario, :clave, :rol, :correo)");
     
@@ -18,9 +18,19 @@ try {
         ':correo'  => $correo
     ]);
 
-    echo "<script>alert('Usuario registrado correctamente'); window.location='usuarios.php';</script>";
+    // 2. CONFIGURACIÓN DEL MENSAJE DE ÉXITO
+    $_SESSION['mensaje'] = "Usuario registrado correctamente";
+    $_SESSION['tipo_mensaje'] = "success"; // 'success' suele ser color verde en CSS/Bootstrap
+
+    // 3. REDIRECCIÓN
+    header("Location: usuarios.php");
+    exit(); // Detiene el script inmediatamente para evitar errores
 
 } catch (PDOException $e) {
-    echo "Error al registrar usuario: " . $e->getMessage();
+    // También capturamos el error en una sesión para mostrarlo en rojo
+    $_SESSION['mensaje'] = "Error al registrar: " . $e->getMessage();
+    $_SESSION['tipo_mensaje'] = "danger"; // 'danger' suele ser color rojo
+    header("Location: usuarios.php");
+    exit();
 }
 ?>
